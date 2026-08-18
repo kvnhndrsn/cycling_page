@@ -50,7 +50,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className="mx-auto mt-12 flex w-full max-w-screen-2xl min-w-max items-center justify-end pl-6 lg:px-16">
+      <nav className="mx-auto mt-2 flex w-full max-w-screen-2xl min-w-max items-center justify-end pl-6 lg:px-8">
         <div className="flex items-center justify-end text-right">
           <div className="ml-4 flex items-center space-x-2">
             <button

@@ -198,10 +198,10 @@ class YearSummaryDrawer(TracksDrawer):
 
         # Runner aligns with ~4th row from bottom
         runner_row_center = dots_y_start + 27.5 * dots_spacing_y
-        runner_name = self.poster.athlete if self.poster.athlete else "Runner"
+        runner_name = self.poster.athlete if self.poster.athlete else "Cyclist"
         dr.add(
             dr.text(
-                "Runner",
+                "Cyclist",
                 insert=(left_margin, runner_row_center - 4),
                 fill=dim_color,
                 style="font-size:5px; font-family:Arial;",
