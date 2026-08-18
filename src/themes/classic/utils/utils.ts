@@ -38,7 +38,7 @@ const titleForShow = (run: Activity): string => {
   const date = run.start_date_local.slice(0, 11);
   const distance = (run.distance / M_TO_DIST).toFixed(2);
   let name = 'Ride';
-  if (run.name.slice(0, 7) === 'Running') {
+  if (run.name.slice(0, 7) === 'Cycling') {
     name = 'ride';
   }
   if (run.name) {
