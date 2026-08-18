@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import Stat from '../Stat';
 import useActivities from '../../hooks/useActivities';
 import type { Activity } from '../../utils/utils';
-import { formatPace } from '../../utils/utils';
+import { formatPace, convertMovingTime2Sec } from '../../utils/utils';
 import useHover from '@core/hooks/useHover';
 import { yearStats, githubYearStats } from '@assets/index';
 import { loadSvgComponent } from '../../utils/svgUtils';
@@ -32,6 +32,8 @@ interface YearStatAccumulator {
   totalElevationGain: number;
   totalMetersForPace: number;
   totalSecondsForPace: number;
+  totalTimeSeconds: number;
+  maxDistance: number;
 }
 
 interface YearStatSummary {
@@ -42,6 +44,9 @@ interface YearStatSummary {
   streak: number;
   totalDistance: number;
   totalElevationGain: string;
+  totalTimeFormatted: string;
+  maxDistance: number;
+  avgDistance: number;
 }
 
 const createAccumulator = (): YearStatAccumulator => ({
@@ -53,6 +58,8 @@ const createAccumulator = (): YearStatAccumulator => ({
   totalElevationGain: 0,
   totalMetersForPace: 0,
   totalSecondsForPace: 0,
+  totalTimeSeconds: 0,
+  maxDistance: 0,
 });
 
 const addRunToAccumulator = (
@@ -62,6 +69,8 @@ const addRunToAccumulator = (
   accumulator.runCount += 1;
   accumulator.totalDistance += run.distance || 0;
   accumulator.totalElevationGain += run.elevation_gain || 0;
+  accumulator.totalTimeSeconds += convertMovingTime2Sec(run.moving_time);
+  accumulator.maxDistance = Math.max(accumulator.maxDistance, run.distance || 0);
 
   if (run.average_speed) {
     accumulator.totalMetersForPace += run.distance || 0;
@@ -77,6 +86,15 @@ const addRunToAccumulator = (
   if (run.streak) {
     accumulator.streak = Math.max(accumulator.streak, run.streak);
   }
+};
+
+const formatTotalTime = (totalSeconds: number): string => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  if (hours > 0) {
+    return `${hours}h ${minutes}min`;
+  }
+  return `${minutes}min`;
 };
 
 const finalizeYearStat = (
@@ -98,6 +116,13 @@ const finalizeYearStat = (
       (accumulator.totalDistance / M_TO_DIST).toFixed(1)
     ),
     totalElevationGain: (accumulator.totalElevationGain * M_TO_ELEV).toFixed(0),
+    totalTimeFormatted: formatTotalTime(accumulator.totalTimeSeconds),
+    maxDistance: parseFloat(
+      (accumulator.maxDistance / M_TO_DIST).toFixed(1)
+    ),
+    avgDistance: parseFloat(
+      (accumulator.totalDistance / M_TO_DIST / accumulator.runCount).toFixed(1)
+    ),
   };
 };
 
@@ -150,7 +175,7 @@ const YearStat = ({
     <div className="cursor-pointer" onClick={() => onClick(year)}>
       <section {...eventHandlers}>
         <Stat value={year} description=" Journey" />
-        <Stat value={summary.runCount} description=" Runs" />
+        <Stat value={summary.runCount} description=" Rides" />
         <Stat value={summary.totalDistance} description={` ${DIST_UNIT}`} />
         {SHOW_ELEVATION_GAIN && (
           <Stat
@@ -158,7 +183,10 @@ const YearStat = ({
             description=" Elevation Gain"
           />
         )}
-        <Stat value={summary.averagePace} description=" Avg Pace" />
+        <Stat value={summary.totalTimeFormatted} description=" Total Time" />
+        <Stat value={summary.maxDistance} description={` Max ${DIST_UNIT}`} />
+        <Stat value={summary.avgDistance} description={` Avg ${DIST_UNIT}/Ride`} />
+        <Stat value={summary.averagePace} description=" Avg Speed" />
         <Stat value={`${summary.streak} day`} description=" Streak" />
         {summary.hasHeartRate && (
           <Stat
@@ -167,9 +195,13 @@ const YearStat = ({
           />
         )}
       </section>
-      {year !== 'Total' && hovered && YearSVG && GithubYearSVG && (
+      {year !== 'Total' && YearSVG && (
         <Suspense fallback="loading...">
-          <YearSVG className="year-svg my-4 h-4/6 w-4/6 border-0 p-0" />
+          <YearSVG className="year-svg my-2 h-1/4 w-1/4 border-0 p-0" />
+        </Suspense>
+      )}
+      {year !== 'Total' && hovered && GithubYearSVG && (
+        <Suspense fallback="loading...">
           <GithubYearSVG className="github-year-svg my-4 h-auto w-full border-0 p-0" />
         </Suspense>
       )}

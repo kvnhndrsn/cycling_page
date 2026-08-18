@@ -37,15 +37,15 @@ export interface Activity {
 const titleForShow = (run: Activity): string => {
   const date = run.start_date_local.slice(0, 11);
   const distance = (run.distance / M_TO_DIST).toFixed(2);
-  let name = 'Run';
+  let name = 'Ride';
   if (run.name.slice(0, 7) === 'Running') {
-    name = 'run';
+    name = 'ride';
   }
   if (run.name) {
     name = run.name;
   }
   return `${name} ${date} ${distance} ${DIST_UNIT} ${
-    !run.summary_polyline ? '(No map data for this run)' : ''
+    !run.summary_polyline ? '(No map data for this ride)' : ''
   }`;
 };
 
@@ -196,10 +196,10 @@ const getActivitySport = (act: Activity): string => {
   if (act.type === 'Run') {
     if (act.subtype === 'generic') {
       const runDistance = act.distance / 1000;
-      if (runDistance > 20 && runDistance < 40) {
-        return RUN_TITLES.HALF_MARATHON_RUN_TITLE;
-      } else if (runDistance >= 40) {
-        return RUN_TITLES.FULL_MARATHON_RUN_TITLE;
+      if (runDistance > 50) {
+        return RUN_TITLES.LONG_RIDE_TITLE;
+      } else if (runDistance > 25) {
+        return RUN_TITLES.MEDIUM_RIDE_TITLE;
       }
       return ACTIVITY_TYPES.RUN_GENERIC_TITLE;
     } else if (act.subtype === 'trail') return ACTIVITY_TYPES.RUN_TRAIL_TITLE;
@@ -221,40 +221,25 @@ const getActivitySport = (act: Activity): string => {
 };
 
 const titleForRun = (run: Activity): string => {
-  if (RICH_TITLE) {
-    // 1. try to use user defined name
-    if (run.name != '') {
-      return run.name;
-    }
-    // 2. try to use location+type if the location is available, eg. 'Shanghai Run'
-    const { city } = locationForRun(run);
-    const activity_sport = getActivitySport(run);
-    if (city && city.length > 0 && activity_sport.length > 0) {
-      return `${city} ${activity_sport}`;
-    }
+  // 1. try to use user defined name
+  if (run.name != '') {
+    return run.name;
   }
-  // 3. use time+length if location or type is not available
-  const runDistance = run.distance / 1000;
+  // 2. combo: time-of-day ride name + date + distance
   const runHour = +run.start_date_local.slice(11, 13);
-  if (runDistance > 20 && runDistance < 40) {
-    return RUN_TITLES.HALF_MARATHON_RUN_TITLE;
+  let timeOfDay = RUN_TITLES.NIGHT_RUN_TITLE;
+  if (runHour >= 5 && runHour <= 10) {
+    timeOfDay = RUN_TITLES.MORNING_RUN_TITLE;
+  } else if (runHour > 10 && runHour <= 14) {
+    timeOfDay = RUN_TITLES.MIDDAY_RUN_TITLE;
+  } else if (runHour > 14 && runHour <= 18) {
+    timeOfDay = RUN_TITLES.AFTERNOON_RUN_TITLE;
+  } else if (runHour > 18 && runHour <= 22) {
+    timeOfDay = RUN_TITLES.EVENING_RUN_TITLE;
   }
-  if (runDistance >= 40) {
-    return RUN_TITLES.FULL_MARATHON_RUN_TITLE;
-  }
-  if (runHour >= 0 && runHour <= 10) {
-    return RUN_TITLES.MORNING_RUN_TITLE;
-  }
-  if (runHour > 10 && runHour <= 14) {
-    return RUN_TITLES.MIDDAY_RUN_TITLE;
-  }
-  if (runHour > 14 && runHour <= 18) {
-    return RUN_TITLES.AFTERNOON_RUN_TITLE;
-  }
-  if (runHour > 18 && runHour <= 21) {
-    return RUN_TITLES.EVENING_RUN_TITLE;
-  }
-  return RUN_TITLES.NIGHT_RUN_TITLE;
+  const date = run.start_date_local.slice(0, 10);
+  const distance = (run.distance / M_TO_DIST).toFixed(1);
+  return `${timeOfDay} \u00B7 ${date} \u00B7 ${distance} ${DIST_UNIT}`;
 };
 
 const filterYearRuns = (run: Activity, year: string) => {

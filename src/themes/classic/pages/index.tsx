@@ -35,6 +35,7 @@ import {
   type IViewState,
 } from '../utils/geoUtils';
 import { useTheme, useThemeChangeCounter } from '../hooks/useTheme';
+import { ContributionHeatmap } from '@/components/ContributionHeatmap';
 
 const HASH_RUN_CHANGE_EVENT = 'running-page-hash-run-change';
 
@@ -186,7 +187,7 @@ const Index = () => {
       }
       setCurrentFilter({ item, func });
       setRunIndex(-1);
-      setTitle(`${item} ${name} Running Heatmap`);
+      setTitle(`${item} ${name} Cycling Heatmap`);
       // Reset single run state when changing filters
       clearRunHash();
     },
@@ -411,7 +412,7 @@ const Index = () => {
         <html lang="en" data-theme={theme} />
       </Helmet>
       <div className="w-full lg:w-1/3">
-        <h1 className="my-12 mt-6 text-5xl font-extrabold italic">
+        <h1 className="my-4 mt-2 text-5xl font-extrabold italic">
           <a href={siteUrl}>{siteTitle}</a>
         </h1>
         {(viewState.zoom ?? 0) <= 3 && IS_CHINESE ? (
@@ -433,6 +434,24 @@ const Index = () => {
           changeYear={changeYear}
           thisYear={year}
           animationTrigger={animationTrigger}
+        />
+        <ContributionHeatmap
+          activities={activities}
+          year={
+            year === 'Total'
+              ? new Date().getFullYear()
+              : parseInt(year, 10)
+          }
+          filter="all"
+          onSelectActivity={(a) => {
+            if (!a) return;
+            const dayActivities = runs.filter(
+              (r) =>
+                r.start_date_local.slice(0, 10) ===
+                a.start_date_local.slice(0, 10)
+            );
+            locateActivity(dayActivities.map((r) => r.run_id));
+          }}
         />
         {year === 'Total' ? (
           <SVGStat />

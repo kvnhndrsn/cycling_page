@@ -53,7 +53,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className="mx-auto mt-12 flex w-full max-w-screen-2xl min-w-max items-center justify-between pl-6 lg:px-16">
+      <nav className="mx-auto mt-4 flex w-full max-w-screen-2xl min-w-max items-center justify-between pl-6 lg:px-8">
         <div className="w-1/4">
           <Link to={siteUrl}>
             <picture>

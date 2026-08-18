@@ -1,5 +1,4 @@
 import {
-  formatPace,
   titleForRun,
   formatRunTime,
   Activity,
@@ -25,7 +24,7 @@ const RunRow = ({
   setRunIndex,
 }: IRunRowProperties) => {
   const distance = (run.distance / M_TO_DIST).toFixed(2);
-  const paceParts = run.average_speed ? formatPace(run.average_speed) : null;
+  const speed = run.average_speed ? (run.average_speed * 3.6).toFixed(1) : null;
   const heartRate = run.average_heartrate;
   const runTime = formatRunTime(run.moving_time);
   const handleClick = () => {
@@ -49,7 +48,7 @@ const RunRow = ({
       {SHOW_ELEVATION_GAIN && (
         <td>{((run.elevation_gain ?? 0) * M_TO_ELEV).toFixed(1)}</td>
       )}
-      {paceParts && <td>{paceParts}</td>}
+      {speed && <td>{speed}</td>}
       <td>{heartRate && heartRate.toFixed(0)}</td>
       <td>{runTime}</td>
       <td className={styles.runDate}>{run.start_date_local}</td>
