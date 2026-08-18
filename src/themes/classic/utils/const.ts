@@ -1,7 +1,9 @@
 // Constants
-// The map tiles are provided by OpenFreeMap by default and do not require a token.
-// A dummy token is needed because mapbox-gl v3 requires a valid-format token even for non-Mapbox tiles.
-const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || 'pk.placeholder';
+// Map tiles come from OpenFreeMap (free, no token needed for tiles).
+// mapbox-gl v3 requires a token to initialize — this shared token satisfies that check.
+const MAPBOX_TOKEN =
+  import.meta.env.VITE_MAPBOX_TOKEN ||
+  'pk.eyJ1IjoieWlob25nMDYxOCIsImEiOiJjbWYxdXR4YncwMTJtMm5zOTE4eTZpMGdtIn0.OnsXdwkZFztR8a5Ph_T-xg';
 const MUNICIPALITY_CITIES_ARR = [
   '北京市',
   '上海市',
