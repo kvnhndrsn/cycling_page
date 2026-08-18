@@ -81,7 +81,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: process.env.PATH_PREFIX ? `${process.env.PATH_PREFIX}/` : '/',
+  base: process.env.PATH_PREFIX ? `${process.env.PATH_PREFIX}/` : '/cycling/',
   define: {
     'import.meta.env.VERCEL': JSON.stringify(process.env.VERCEL),
   },
@@ -97,6 +97,6 @@ export default defineConfig({
   build: {
     manifest: true,
     modulePreload: false,
-    outDir: './dist',
+    outDir: '../_site/cycling',
   },
 });
