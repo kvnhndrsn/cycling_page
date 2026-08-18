@@ -1,6 +1,7 @@
 // Constants
-// The map tiles are provided by MapCN (Carto basemaps) by default and do not require a token.
-const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || '';
+// The map tiles are provided by OpenFreeMap by default and do not require a token.
+// A dummy token is needed because mapbox-gl v3 requires a valid-format token even for non-Mapbox tiles.
+const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || 'pk.placeholder';
 const MUNICIPALITY_CITIES_ARR = [
   '北京市',
   '上海市',
