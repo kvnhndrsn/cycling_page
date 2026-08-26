@@ -52,6 +52,13 @@ const Header = () => {
     <>
       <nav className="mx-auto mt-2 flex w-full max-w-screen-2xl min-w-max items-center justify-end pl-6 lg:px-8">
         <div className="flex items-center justify-end text-right">
+          <a
+            href="/everystreet/"
+            className="mr-4 text-sm font-medium opacity-70 hover:opacity-100 transition-opacity"
+            title="#everystreet coverage map"
+          >
+            #everystreet
+          </a>
           <div className="ml-4 flex items-center space-x-2">
             <button
               type="button"
