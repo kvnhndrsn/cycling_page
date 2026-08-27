@@ -131,10 +131,8 @@ export function formatDistance(meters: number): string {
 
 export function formatPace(speedMs: number): string {
   if (!speedMs) return '--';
-  const paceMin = 1000 / 60 / speedMs;
-  const min = Math.floor(paceMin);
-  const sec = Math.round((paceMin - min) * 60);
-  return `${min}:${sec.toString().padStart(2, '0')}`;
+  const kmh = speedMs * 3.6;
+  return `${kmh.toFixed(1)} km/h`;
 }
 
 export function formatDuration(timeStr: string): string {

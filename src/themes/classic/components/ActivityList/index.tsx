@@ -208,12 +208,9 @@ const formatTime = (seconds: number): string => {
 };
 
 const formatPace = (speed: number): string => {
-  if (speed === 0) return `0:00 min/${DIST_UNIT}`;
-  const pace = 60 / speed;
-  const totalSeconds = Math.round(pace * 60);
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds} min/${DIST_UNIT}`;
+  if (speed === 0) return `0 km/h`;
+  const kmh = speed * 3.6;
+  return `${kmh.toFixed(1)} km/h`;
 };
 
 const generateLabels = (interval: string, period: string): number[] => {
