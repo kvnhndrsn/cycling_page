@@ -36,6 +36,7 @@ import {
 } from '../utils/geoUtils';
 import { useTheme, useThemeChangeCounter } from '../hooks/useTheme';
 import { ContributionHeatmap } from '@/components/ContributionHeatmap';
+import EverystreetSection from '@/components/EverystreetSection';
 
 const HASH_RUN_CHANGE_EVENT = 'running-page-hash-run-change';
 
@@ -463,6 +464,7 @@ const Index = () => {
             setRunIndex={setRunIndex}
           />
         )}
+        <EverystreetSection />
       </div>
       {/* Enable Audiences in Vercel Analytics: https://vercel.com/docs/concepts/analytics/audiences/quickstart */}
       {import.meta.env.VERCEL && <Analytics />}
