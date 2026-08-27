@@ -3,7 +3,6 @@ import { totalStat } from '@assets/index';
 import { loadSvgComponent } from '../../utils/svgUtils';
 import { initSvgColorAdjustments } from '../../utils/colorUtils';
 import useActivities from '../../hooks/useActivities';
-import Stat from '../Stat';
 import { DIST_UNIT, M_TO_DIST, M_TO_ELEV } from '../../utils/utils';
 import { convertMovingTime2Sec } from '../../utils/utils';
 import { SHOW_ELEVATION_GAIN } from '../../utils/const';
@@ -47,16 +46,36 @@ const SVGStat = () => {
 
   return (
     <div id="svgStat">
-      <div className="mb-6 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-5">
+      <div className="my-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-5">
         <h3 className="mb-3 text-sm font-semibold text-[var(--color-muted)]">All-Time Summary</h3>
-        <Stat value={allTimeStats.totalCount} description=" Total Rides" />
-        <Stat value={allTimeStats.totalDistance.toFixed(1)} description={` Total ${DIST_UNIT}`} />
-        <Stat value={allTimeStats.totalTimeFormatted} description=" Total Time" />
-        {SHOW_ELEVATION_GAIN && (
-          <Stat value={allTimeStats.totalElevation.toFixed(0)} description=" Total Elevation Gain" />
-        )}
-        <Stat value={allTimeStats.maxDistance.toFixed(1)} description={` Max ${DIST_UNIT}`} />
-        <Stat value={allTimeStats.avgDistance.toFixed(1)} description={` Avg ${DIST_UNIT}/Ride`} />
+        <div className="grid grid-cols-3 gap-x-4 gap-y-2 text-sm">
+          <div>
+            <span className="text-[var(--color-muted)]">Rides</span>
+            <p className="text-lg font-bold">{allTimeStats.totalCount}</p>
+          </div>
+          <div>
+            <span className="text-[var(--color-muted)]">Distance</span>
+            <p className="text-lg font-bold">{allTimeStats.totalDistance.toFixed(1)} {DIST_UNIT}</p>
+          </div>
+          <div>
+            <span className="text-[var(--color-muted)]">Time</span>
+            <p className="text-lg font-bold">{allTimeStats.totalTimeFormatted}</p>
+          </div>
+          {SHOW_ELEVATION_GAIN && (
+            <div>
+              <span className="text-[var(--color-muted)]">Elevation</span>
+              <p className="text-lg font-bold">{allTimeStats.totalElevation.toFixed(0)} m</p>
+            </div>
+          )}
+          <div>
+            <span className="text-[var(--color-muted)]">Max</span>
+            <p className="text-lg font-bold">{allTimeStats.maxDistance.toFixed(1)} {DIST_UNIT}</p>
+          </div>
+          <div>
+            <span className="text-[var(--color-muted)]">Avg</span>
+            <p className="text-lg font-bold">{allTimeStats.avgDistance.toFixed(1)} {DIST_UNIT}</p>
+          </div>
+        </div>
       </div>
       <Suspense fallback={<div className="text-center">Loading...</div>}>
         <GithubSvg className="github-svg mt-4 h-auto w-full" />

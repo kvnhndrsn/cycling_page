@@ -28,14 +28,12 @@ const YearsStat = ({
 
   // for short solution need to refactor
   return (
-    <div className="w-full pr-16 pb-16 lg:w-full lg:pr-16">
-      <section className="pb-0">
-        <p className="leading-relaxed">
+    <div className="w-full py-4">
+      <section className="mb-4">
+        <p className="text-sm text-[var(--color-muted)] leading-relaxed">
           {infoMessage}
-          <br />
         </p>
       </section>
-      <hr />
       {yearsArrayUpdate.map((yearItem) => (
         <YearStat key={yearItem} year={yearItem} onClick={onClick} />
       ))}

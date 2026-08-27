@@ -33,7 +33,7 @@ export default function EverystreetSection() {
   const offset = circumference - (stats.pct_complete / 100) * circumference;
 
   return (
-    <div className="mt-6 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 transition-all duration-300 hover:border-[var(--color-accent)]/30 hover:bg-[var(--color-accent)]/5 hover:shadow-lg">
+    <div className="my-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 transition-all duration-300 hover:border-[var(--color-accent)]/30 hover:bg-[var(--color-accent)]/5 hover:shadow-lg">
       <div className="mb-4 flex items-center gap-2">
         <h2 className="text-lg font-bold">Street Coverage</h2>
         <a

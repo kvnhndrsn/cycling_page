@@ -412,21 +412,11 @@ const Index = () => {
       <Helmet>
         <html lang="en" data-theme={theme} />
       </Helmet>
-      <div className="w-full lg:w-1/3">
+      <div className="w-full">
         <h1 className="my-4 mt-2 text-5xl font-extrabold italic">
           <a href={siteUrl}>{siteTitle}</a>
         </h1>
-        {(viewState.zoom ?? 0) <= 3 && IS_CHINESE ? (
-          <LocationStat
-            changeYear={changeYear}
-            changeCity={changeCity}
-            changeTitle={changeTitle}
-          />
-        ) : (
-          <YearsStat year={year} onClick={changeYear} />
-        )}
-      </div>
-      <div className="w-full lg:w-2/3" id="map-container">
+
         <RunMap
           title={title}
           viewState={viewState}
@@ -436,6 +426,9 @@ const Index = () => {
           thisYear={year}
           animationTrigger={animationTrigger}
         />
+
+        <YearsStat year={year} onClick={changeYear} />
+
         <ContributionHeatmap
           activities={activities}
           year={
@@ -454,6 +447,7 @@ const Index = () => {
             locateActivity(dayActivities.map((r) => r.run_id));
           }}
         />
+
         {year === 'Total' ? (
           <SVGStat />
         ) : (
@@ -464,6 +458,7 @@ const Index = () => {
             setRunIndex={setRunIndex}
           />
         )}
+
         <EverystreetSection />
       </div>
       {/* Enable Audiences in Vercel Analytics: https://vercel.com/docs/concepts/analytics/audiences/quickstart */}

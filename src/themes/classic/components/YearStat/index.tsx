@@ -1,5 +1,4 @@
 import { lazy, Suspense } from 'react';
-import Stat from '../Stat';
 import useActivities from '../../hooks/useActivities';
 import type { Activity } from '../../utils/utils';
 import { formatPace, convertMovingTime2Sec } from '../../utils/utils';
@@ -173,27 +172,52 @@ const YearStat = ({
 
   return (
     <div className="cursor-pointer" onClick={() => onClick(year)}>
-      <section {...eventHandlers}>
-        <Stat value={year} description=" Journey" />
-        <Stat value={summary.runCount} description=" Rides" />
-        <Stat value={summary.totalDistance} description={` ${DIST_UNIT}`} />
-        {SHOW_ELEVATION_GAIN && (
-          <Stat
-            value={summary.totalElevationGain}
-            description=" Elevation Gain"
-          />
-        )}
-        <Stat value={summary.totalTimeFormatted} description=" Total Time" />
-        <Stat value={summary.maxDistance} description={` Max ${DIST_UNIT}`} />
-        <Stat value={summary.avgDistance} description={` Avg ${DIST_UNIT}/Ride`} />
-        <Stat value={summary.averagePace} description=" Avg Speed" />
-        <Stat value={`${summary.streak} day`} description=" Streak" />
-        {summary.hasHeartRate && (
-          <Stat
-            value={summary.averageHeartRate}
-            description=" Avg Heart Rate"
-          />
-        )}
+      <section {...eventHandlers} className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-4 mb-4">
+        <h3 className="text-sm font-semibold text-[var(--color-muted)] mb-3">
+          {year} {year === 'Total' ? 'All-Time Summary' : 'Journey'}
+        </h3>
+        <div className="grid grid-cols-3 gap-x-4 gap-y-2 text-sm">
+          <div>
+            <span className="text-[var(--color-muted)]">Rides</span>
+            <p className="text-lg font-bold">{summary.runCount}</p>
+          </div>
+          <div>
+            <span className="text-[var(--color-muted)]">Distance</span>
+            <p className="text-lg font-bold">{summary.totalDistance} {DIST_UNIT}</p>
+          </div>
+          {SHOW_ELEVATION_GAIN && (
+            <div>
+              <span className="text-[var(--color-muted)]">Elevation</span>
+              <p className="text-lg font-bold">{summary.totalElevationGain} m</p>
+            </div>
+          )}
+          <div>
+            <span className="text-[var(--color-muted)]">Time</span>
+            <p className="text-lg font-bold">{summary.totalTimeFormatted}</p>
+          </div>
+          <div>
+            <span className="text-[var(--color-muted)]">Max</span>
+            <p className="text-lg font-bold">{summary.maxDistance} {DIST_UNIT}</p>
+          </div>
+          <div>
+            <span className="text-[var(--color-muted)]">Avg</span>
+            <p className="text-lg font-bold">{summary.avgDistance} {DIST_UNIT}</p>
+          </div>
+          <div>
+            <span className="text-[var(--color-muted)]">Speed</span>
+            <p className="text-lg font-bold">{summary.averagePace}</p>
+          </div>
+          <div>
+            <span className="text-[var(--color-muted)]">Streak</span>
+            <p className="text-lg font-bold">{summary.streak}d</p>
+          </div>
+          {summary.hasHeartRate && (
+            <div>
+              <span className="text-[var(--color-muted)]">Avg HR</span>
+              <p className="text-lg font-bold">{summary.averageHeartRate}</p>
+            </div>
+          )}
+        </div>
       </section>
       {year !== 'Total' && YearSVG && (
         <Suspense fallback="loading...">
@@ -205,7 +229,6 @@ const YearStat = ({
           <GithubYearSVG className="github-year-svg my-4 h-auto w-full border-0 p-0" />
         </Suspense>
       )}
-      <hr />
     </div>
   );
 };
