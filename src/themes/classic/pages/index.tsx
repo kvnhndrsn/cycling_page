@@ -427,6 +427,8 @@ const Index = () => {
           animationTrigger={animationTrigger}
         />
 
+        <SVGStat />
+
         <YearsStat year={year} onClick={changeYear} />
 
         <ContributionHeatmap
@@ -448,16 +450,12 @@ const Index = () => {
           }}
         />
 
-        {year === 'Total' ? (
-          <SVGStat />
-        ) : (
-          <RunTable
-            runs={runs}
-            locateActivity={locateActivity}
-            runIndex={runIndex}
-            setRunIndex={setRunIndex}
-          />
-        )}
+        <RunTable
+          runs={runs}
+          locateActivity={locateActivity}
+          runIndex={runIndex}
+          setRunIndex={setRunIndex}
+        />
 
         <EverystreetSection />
       </div>

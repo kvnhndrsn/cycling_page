@@ -35,7 +35,7 @@ export default function EverystreetSection() {
   return (
     <div className="my-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 transition-all duration-300 hover:border-[var(--color-accent)]/30 hover:bg-[var(--color-accent)]/5 hover:shadow-lg">
       <div className="mb-4 flex items-center gap-2">
-        <h2 className="text-lg font-bold">Street Coverage</h2>
+        <h2 className="text-lg font-bold">Regina SK — #everystreet</h2>
         <a
           href="/everystreet/"
           className="ml-auto text-xs text-[var(--color-accent)] hover:underline"
