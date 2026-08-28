@@ -58,7 +58,7 @@ const subscribeToThemeChanges = (onStoreChange: () => void) => {
  * @returns The appropriate map style for the theme
  */
 export const getMapThemeFromCurrentTheme = (theme: Theme): string => {
-  if (theme === 'dark') return MAP_TILE_STYLE_DARK;
+  // Always use the light basemap so routes/streets stand out clearly
   return MAP_TILE_STYLE_LIGHT;
 };
 

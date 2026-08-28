@@ -417,14 +417,23 @@ const Index = () => {
           <a href={siteUrl}>{siteTitle}</a>
         </h1>
 
-        <RunMap
-          title={title}
-          viewState={viewState}
-          geoData={animatedGeoData}
-          setViewState={setViewState}
-          changeYear={changeYear}
-          thisYear={year}
-          animationTrigger={animationTrigger}
+        <div id="map-container">
+          <RunMap
+            title={title}
+            viewState={viewState}
+            geoData={animatedGeoData}
+            setViewState={setViewState}
+            changeYear={changeYear}
+            thisYear={year}
+            animationTrigger={animationTrigger}
+          />
+        </div>
+
+        <RunTable
+          runs={runs}
+          locateActivity={locateActivity}
+          runIndex={runIndex}
+          setRunIndex={setRunIndex}
         />
 
         <SVGStat />
@@ -448,13 +457,6 @@ const Index = () => {
             );
             locateActivity(dayActivities.map((r) => r.run_id));
           }}
-        />
-
-        <RunTable
-          runs={runs}
-          locateActivity={locateActivity}
-          runIndex={runIndex}
-          setRunIndex={setRunIndex}
         />
 
         <EverystreetSection />
