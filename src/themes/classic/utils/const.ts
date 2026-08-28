@@ -30,7 +30,7 @@ const MAP_LAYER_LIST = [
 // styling: set to `true` if you want dash-line route
 const USE_DASH_LINE = true;
 // styling: route line opacity: [0, 1]
-const LINE_OPACITY = 0.4;
+const LINE_OPACITY = 0.8;
 // styling: map height - responsive design
 // Use smaller height on mobile devices for better user experience
 const MAP_HEIGHT = window.innerWidth <= 768 ? 250 : 600;
@@ -180,7 +180,7 @@ export const RUN_COLOR_LIGHT = '#47b8e0';
 export const RUN_COLOR_DARK = MAIN_COLOR;
 
 // Single run animation colors
-export const SINGLE_RUN_COLOR_LIGHT = '#52c41a'; // Green for light theme
+export const SINGLE_RUN_COLOR_LIGHT = '#166534'; // Dark green for light theme
 export const SINGLE_RUN_COLOR_DARK = '#ff4d4f'; // Red for dark theme
 
 // Helper function to get theme-aware RUN_COLOR
@@ -218,7 +218,7 @@ export const getRuntimeSingleRunColor = (): string => {
 // Legacy export for backwards compatibility
 export const RUN_COLOR = '#47b8e0';
 export const RUN_TRAIL_COLOR = 'rgb(255,153,51)';
-export const CYCLING_COLOR = 'rgb(51,255,87)';
+export const CYCLING_COLOR = 'rgb(22,122,43)'; // Dark green, stands out on light map
 export const HIKING_COLOR = 'rgb(151,51,255)';
 export const WALKING_COLOR = HIKING_COLOR;
 export const SWIMMING_COLOR = 'rgb(255,51,51)';
