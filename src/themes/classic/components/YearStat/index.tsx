@@ -3,17 +3,10 @@ import useActivities from '../../hooks/useActivities';
 import type { Activity } from '../../utils/utils';
 import { formatPace, convertMovingTime2Sec } from '../../utils/utils';
 import useHover from '@core/hooks/useHover';
-import { yearStats, githubYearStats } from '@assets/index';
+import { githubYearStats } from '@assets/index';
 import { loadSvgComponent } from '../../utils/svgUtils';
 import { SHOW_ELEVATION_GAIN } from '../../utils/const';
 import { DIST_UNIT, M_TO_DIST, M_TO_ELEV } from '../../utils/utils';
-
-const yearSvgs = Object.fromEntries(
-  Object.keys(yearStats).map((path) => [
-    path,
-    lazy(() => loadSvgComponent(yearStats, path)),
-  ])
-);
 
 const githubYearSvgs = Object.fromEntries(
   Object.keys(githubYearStats).map((path) => [
@@ -69,7 +62,10 @@ const addRunToAccumulator = (
   accumulator.totalDistance += run.distance || 0;
   accumulator.totalElevationGain += run.elevation_gain || 0;
   accumulator.totalTimeSeconds += convertMovingTime2Sec(run.moving_time);
-  accumulator.maxDistance = Math.max(accumulator.maxDistance, run.distance || 0);
+  accumulator.maxDistance = Math.max(
+    accumulator.maxDistance,
+    run.distance || 0
+  );
 
   if (run.average_speed) {
     accumulator.totalMetersForPace += run.distance || 0;
@@ -116,9 +112,7 @@ const finalizeYearStat = (
     ),
     totalElevationGain: (accumulator.totalElevationGain * M_TO_ELEV).toFixed(0),
     totalTimeFormatted: formatTotalTime(accumulator.totalTimeSeconds),
-    maxDistance: parseFloat(
-      (accumulator.maxDistance / M_TO_DIST).toFixed(1)
-    ),
+    maxDistance: parseFloat((accumulator.maxDistance / M_TO_DIST).toFixed(1)),
     avgDistance: parseFloat(
       (accumulator.totalDistance / M_TO_DIST / accumulator.runCount).toFixed(1)
     ),
@@ -164,7 +158,6 @@ const YearStat = ({
   // for hover
   const [hovered, eventHandlers] = useHover();
   // lazy Component
-  const YearSVG = yearSvgs[`./year_${year}.svg`];
   const GithubYearSVG = githubYearSvgs[`./github_${year}.svg`];
   const summary = getYearStatSummaries(activities).get(year);
 
@@ -172,8 +165,11 @@ const YearStat = ({
 
   return (
     <div className="cursor-pointer" onClick={() => onClick(year)}>
-      <section {...eventHandlers} className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-4 mb-4">
-        <h3 className="text-sm font-semibold text-[var(--color-muted)] mb-3">
+      <section
+        {...eventHandlers}
+        className="mb-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-4"
+      >
+        <h3 className="mb-3 text-sm font-semibold text-[var(--color-muted)]">
           {year} {year === 'Total' ? 'All-Time Summary' : 'Journey'}
         </h3>
         <div className="grid grid-cols-3 gap-x-4 gap-y-2 text-sm">
@@ -183,12 +179,16 @@ const YearStat = ({
           </div>
           <div>
             <span className="text-[var(--color-muted)]">Distance</span>
-            <p className="text-lg font-bold">{summary.totalDistance} {DIST_UNIT}</p>
+            <p className="text-lg font-bold">
+              {summary.totalDistance} {DIST_UNIT}
+            </p>
           </div>
           {SHOW_ELEVATION_GAIN && (
             <div>
               <span className="text-[var(--color-muted)]">Elevation</span>
-              <p className="text-lg font-bold">{summary.totalElevationGain} m</p>
+              <p className="text-lg font-bold">
+                {summary.totalElevationGain} m
+              </p>
             </div>
           )}
           <div>
@@ -197,11 +197,15 @@ const YearStat = ({
           </div>
           <div>
             <span className="text-[var(--color-muted)]">Max</span>
-            <p className="text-lg font-bold">{summary.maxDistance} {DIST_UNIT}</p>
+            <p className="text-lg font-bold">
+              {summary.maxDistance} {DIST_UNIT}
+            </p>
           </div>
           <div>
             <span className="text-[var(--color-muted)]">Avg</span>
-            <p className="text-lg font-bold">{summary.avgDistance} {DIST_UNIT}</p>
+            <p className="text-lg font-bold">
+              {summary.avgDistance} {DIST_UNIT}
+            </p>
           </div>
           <div>
             <span className="text-[var(--color-muted)]">Speed</span>
@@ -219,11 +223,6 @@ const YearStat = ({
           )}
         </div>
       </section>
-      {year !== 'Total' && YearSVG && (
-        <Suspense fallback="loading...">
-          <YearSVG className="year-svg my-2 h-1/4 w-1/4 border-0 p-0" />
-        </Suspense>
-      )}
       {year !== 'Total' && hovered && GithubYearSVG && (
         <Suspense fallback="loading...">
           <GithubYearSVG className="github-year-svg my-4 h-auto w-full border-0 p-0" />

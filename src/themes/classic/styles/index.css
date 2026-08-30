@@ -39,6 +39,10 @@
     --color-run-table-thead: var(--color-neutral-800);
     --color-run-row-hover-background: var(--color-neutral-200);
     --color-activity-card: var(--color-neutral-300);
+    --color-card: #ffffff;
+    --color-border: var(--color-neutral-300);
+    --color-muted: var(--color-neutral-600);
+    --color-accent: var(--color-brand);
     --svg-color-active-cell: var(--color-neutral-400);
     --svg-special-color: #d4a574;
     --svg-special-color2: #c5756b;
@@ -60,6 +64,10 @@
     --color-run-table-thead: var(--color-zinc-300);
     --color-run-row-hover-background: var(--color-neutral-800);
     --color-activity-card: var(--color-neutral-700);
+    --color-card: var(--color-neutral-800);
+    --color-border: var(--color-neutral-700);
+    --color-muted: var(--color-neutral-400);
+    --color-accent: var(--color-brand);
     --svg-color-active-cell: #4dd2ff;
     --svg-special-color: #f7d02c;
     --svg-special-color2: #f56c6c;
@@ -80,6 +88,10 @@
   --color-run-table-thead: var(--color-neutral-800);
   --color-run-row-hover-background: var(--color-neutral-200);
   --color-activity-card: var(--color-neutral-300);
+  --color-card: #ffffff;
+  --color-border: var(--color-neutral-300);
+  --color-muted: var(--color-neutral-600);
+  --color-accent: var(--color-brand);
   --svg-color-inactive-cell: var(--color-neutral-600);
   --svg-color-active-cell: var(--color-neutral-400);
   --svg-special-color: #d4a574;
@@ -100,6 +112,10 @@
   --color-run-table-thead: var(--color-zinc-300);
   --color-run-row-hover-background: var(--color-neutral-800);
   --color-activity-card: var(--color-neutral-700);
+  --color-card: var(--color-neutral-800);
+  --color-border: var(--color-neutral-700);
+  --color-muted: var(--color-neutral-400);
+  --color-accent: var(--color-brand);
   --svg-color-active-cell: #4dd2ff;
   --svg-special-color: #f7d02c;
   --svg-special-color2: #f56c6c;

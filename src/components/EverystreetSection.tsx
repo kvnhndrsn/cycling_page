@@ -12,6 +12,8 @@ interface EverystreetStats {
 }
 
 import statsUrl from '@/static/everystreet-stats.json?url';
+import reginaUrl from '@/static/Regina.webp';
+import reginaMosaicUrl from '@/static/Regina_Mosaic.webp';
 
 export default function EverystreetSection() {
   const [stats, setStats] = useState<EverystreetStats | null>(null);
@@ -58,7 +60,7 @@ export default function EverystreetSection() {
               cy="60"
               r="54"
               fill="none"
-              stroke="var(--color-border)"
+              style={{ stroke: 'var(--color-border)' }}
               strokeWidth="8"
             />
             <circle
@@ -66,7 +68,7 @@ export default function EverystreetSection() {
               cy="60"
               r="54"
               fill="none"
-              stroke="var(--color-accent)"
+              style={{ stroke: 'var(--color-accent)' }}
               strokeWidth="8"
               strokeLinecap="round"
               strokeDasharray={circumference}
@@ -100,6 +102,22 @@ export default function EverystreetSection() {
             <p className="text-lg font-bold">{stats.rides}</p>
           </div>
         </div>
+      </div>
+
+      {/* Regina photos */}
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <img
+          src={reginaUrl}
+          alt="Regina, Saskatchewan"
+          loading="lazy"
+          className="h-24 w-auto rounded-lg border border-[var(--color-border)]"
+        />
+        <img
+          src={reginaMosaicUrl}
+          alt="Regina photo mosaic"
+          loading="lazy"
+          className="h-24 w-auto rounded-lg border border-[var(--color-border)]"
+        />
       </div>
 
       {/* Embedded map */}

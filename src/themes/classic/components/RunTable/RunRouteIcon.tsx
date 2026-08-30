@@ -52,7 +52,7 @@ const RunRouteIcon = ({ run }: IRunRouteIconProperties) => {
       <path
         d={d}
         fill="none"
-        stroke="var(--color-accent)"
+        style={{ stroke: 'var(--color-accent)' }}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -63,7 +63,7 @@ const RunRouteIcon = ({ run }: IRunRouteIconProperties) => {
         cy={toY(start[1])}
         r="2"
         fill="#2ecc71"
-        stroke="var(--color-background)"
+        style={{ stroke: 'var(--color-background)' }}
         strokeWidth="0.8"
       />
       <circle
@@ -71,7 +71,7 @@ const RunRouteIcon = ({ run }: IRunRouteIconProperties) => {
         cy={toY(end[1])}
         r="2"
         fill="#e74c3c"
-        stroke="var(--color-background)"
+        style={{ stroke: 'var(--color-background)' }}
         strokeWidth="0.8"
       />
     </svg>

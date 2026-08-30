@@ -3,7 +3,6 @@ import {
   useState,
   useMemo,
   useCallback,
-  useRef,
   useSyncExternalStore,
 } from 'react';
 import { Analytics } from '@vercel/analytics/react';
@@ -12,7 +11,6 @@ import Layout from '../components/Layout';
 import LocationStat from '../components/LocationStat';
 import RunMap from '../components/RunMap';
 import RunTable from '../components/RunTable';
-import SVGStat from '../components/SVGStat';
 import SummaryStats from '../components/SummaryStats';
 import YearsStat from '../components/YearsStat';
 import useActivities from '../hooks/useActivities';
@@ -105,9 +103,6 @@ const Index = () => {
 
   // Animation trigger for single runs - increment this to force animation replay
   const [animationTrigger, setAnimationTrigger] = useState(0);
-
-  const selectedRunIdRef = useRef<number | null>(null);
-  const selectedRunDateRef = useRef<string | null>(null);
 
   // Memoize expensive calculations
   const runs = useMemo(() => {
@@ -347,65 +342,6 @@ const Index = () => {
     }
   }, [runs, startAnimation, singleRunId]);
 
-  useEffect(() => {
-    if (year !== 'Total') {
-      return;
-    }
-
-    let svgStat = document.getElementById('svgStat');
-    if (!svgStat) {
-      return;
-    }
-
-    const handleClick = (e: Event) => {
-      const target = e.target as HTMLElement;
-      if (target.tagName.toLowerCase() === 'path') {
-        // Use querySelector to get the <desc> element and the <title> element.
-        const descEl = target.querySelector('desc');
-        if (descEl) {
-          // If the runId exists in the <desc> element, it means that a running route has been clicked.
-          const runId = Number(descEl.innerHTML);
-          if (!runId) {
-            return;
-          }
-          if (selectedRunIdRef.current === runId) {
-            selectedRunIdRef.current = null;
-            locateActivity(runs.map((r) => r.run_id));
-          } else {
-            selectedRunIdRef.current = runId;
-            locateActivity([runId]);
-          }
-          return;
-        }
-
-        const titleEl = target.querySelector('title');
-        if (titleEl) {
-          // If the runDate exists in the <title> element, it means that a date square has been clicked.
-          const [runDate] = titleEl.innerHTML.match(
-            /\d{4}-\d{1,2}-\d{1,2}/
-          ) || [`${+thisYear + 1}`];
-          const runIDsOnDate = runs
-            .filter((r) => r.start_date_local.slice(0, 10) === runDate)
-            .map((r) => r.run_id);
-          if (!runIDsOnDate.length) {
-            return;
-          }
-          if (selectedRunDateRef.current === runDate) {
-            selectedRunDateRef.current = null;
-            locateActivity(runs.map((r) => r.run_id));
-          } else {
-            selectedRunDateRef.current = runDate;
-            locateActivity(runIDsOnDate);
-          }
-        }
-      }
-    };
-    svgStat.addEventListener('click', handleClick);
-    return () => {
-      svgStat && svgStat.removeEventListener('click', handleClick);
-    };
-  }, [year, locateActivity, runs, thisYear]);
-
   const { theme } = useTheme();
 
   return (
@@ -438,8 +374,6 @@ const Index = () => {
           runIndex={runIndex}
           setRunIndex={setRunIndex}
         />
-
-        <SVGStat />
 
         <YearsStat year={year} onClick={changeYear} />
 
