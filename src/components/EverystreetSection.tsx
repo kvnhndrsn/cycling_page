@@ -33,14 +33,19 @@ export default function EverystreetSection() {
   const offset = circumference - (stats.pct_complete / 100) * circumference;
 
   return (
-    <div className="my-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 transition-all duration-300 hover:border-[var(--color-accent)]/30 hover:bg-[var(--color-accent)]/5 hover:shadow-lg">
+    <div
+      id="everystreet"
+      className="my-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 transition-all duration-300 hover:border-[var(--color-accent)]/30 hover:bg-[var(--color-accent)]/5 hover:shadow-lg"
+    >
       <div className="mb-4 flex items-center gap-2">
         <h2 className="text-lg font-bold">Regina SK — #everystreet</h2>
         <a
-          href="/everystreet/"
+          href="/everystreet/map.html"
+          target="_blank"
+          rel="noreferrer"
           className="ml-auto text-xs text-[var(--color-accent)] hover:underline"
         >
-          Full map →
+          Full map ↗
         </a>
       </div>
 
@@ -71,7 +76,9 @@ export default function EverystreetSection() {
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-2xl font-bold">{stats.pct_complete}%</span>
-            <span className="text-[10px] text-[var(--color-muted)]">complete</span>
+            <span className="text-[10px] text-[var(--color-muted)]">
+              complete
+            </span>
           </div>
         </div>
 

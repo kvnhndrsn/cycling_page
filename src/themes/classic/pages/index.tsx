@@ -13,6 +13,7 @@ import LocationStat from '../components/LocationStat';
 import RunMap from '../components/RunMap';
 import RunTable from '../components/RunTable';
 import SVGStat from '../components/SVGStat';
+import SummaryStats from '../components/SummaryStats';
 import YearsStat from '../components/YearsStat';
 import useActivities from '../hooks/useActivities';
 import getSiteMetadata from '@core/hooks/useSiteMetadata';
@@ -417,6 +418,8 @@ const Index = () => {
           <a href={siteUrl}>{siteTitle}</a>
         </h1>
 
+        <SummaryStats />
+
         <div id="map-container">
           <RunMap
             title={title}
@@ -443,9 +446,7 @@ const Index = () => {
         <ContributionHeatmap
           activities={activities}
           year={
-            year === 'Total'
-              ? new Date().getFullYear()
-              : parseInt(year, 10)
+            year === 'Total' ? new Date().getFullYear() : parseInt(year, 10)
           }
           filter="all"
           onSelectActivity={(a) => {

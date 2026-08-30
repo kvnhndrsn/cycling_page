@@ -7,6 +7,7 @@ import {
 import { SHOW_ELEVATION_GAIN } from '../../utils/const';
 import { M_TO_DIST, M_TO_ELEV } from '../../utils/utils';
 import styles from './style.module.css';
+import RunRouteIcon from './RunRouteIcon';
 
 interface IRunRowProperties {
   elementIndex: number;
@@ -25,7 +26,6 @@ const RunRow = ({
 }: IRunRowProperties) => {
   const distance = (run.distance / M_TO_DIST).toFixed(2);
   const speed = run.average_speed ? (run.average_speed * 3.6).toFixed(1) : null;
-  const heartRate = run.average_heartrate;
   const runTime = formatRunTime(run.moving_time);
   const handleClick = () => {
     if (runIndex === elementIndex) {
@@ -48,8 +48,10 @@ const RunRow = ({
       {SHOW_ELEVATION_GAIN && (
         <td>{((run.elevation_gain ?? 0) * M_TO_ELEV).toFixed(1)}</td>
       )}
-      {speed && <td>{speed}</td>}
-      <td>{heartRate && heartRate.toFixed(0)}</td>
+      {speed ? <td>{speed}</td> : <td>—</td>}
+      <td>
+        <RunRouteIcon run={run} />
+      </td>
       <td>{runTime}</td>
       <td className={styles.runDate}>{run.start_date_local}</td>
     </tr>

@@ -36,9 +36,18 @@ const RunTable = ({
   const [sortState, setSortState] = useState<SortState | null>(null);
 
   const sortKeys = useMemo(() => {
-    const keys = [DIST_UNIT, 'Elev', 'Speed', 'BPM', 'Time', 'Date'];
+    const keys = [DIST_UNIT, 'Elev', 'Speed', 'Time', 'Date'];
     return SHOW_ELEVATION_GAIN ? keys : keys.filter((key) => key !== 'Elev');
   }, []);
+
+  const headers = useMemo(() => {
+    const routeIndex = sortKeys.indexOf('Speed') + 1;
+    return [
+      ...sortKeys.slice(0, routeIndex),
+      'Route',
+      ...sortKeys.slice(routeIndex),
+    ];
+  }, [sortKeys]);
 
   const getSortFunction = useCallback(
     (key: string, direction: SortDirection): SortFunc | undefined => {
@@ -53,11 +62,6 @@ const RunTable = ({
       }
       if (key === 'Speed') {
         return (a, b) => (a.average_speed - b.average_speed) * multiplier;
-      }
-      if (key === 'BPM') {
-        return (a, b) =>
-          ((a.average_heartrate ?? 0) - (b.average_heartrate ?? 0)) *
-          multiplier;
       }
       if (key === 'Time') {
         return (a, b) =>
@@ -110,18 +114,27 @@ const RunTable = ({
         <thead>
           <tr>
             <th />
-            {sortKeys.map((k) => (
-              <th
-                key={k}
-                aria-sort={
-                  sortState?.key === k ? sortState.direction : undefined
-                }
-                className={styles.sortableHeader}
-                onClick={() => handleClick(k)}
-              >
-                {k}
-              </th>
-            ))}
+            {headers.map((k) => {
+              if (k === 'Route') {
+                return (
+                  <th key={k} className={styles.routeHeader}>
+                    {k}
+                  </th>
+                );
+              }
+              return (
+                <th
+                  key={k}
+                  aria-sort={
+                    sortState?.key === k ? sortState.direction : undefined
+                  }
+                  className={styles.sortableHeader}
+                  onClick={() => handleClick(k)}
+                >
+                  {k}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>

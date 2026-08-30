@@ -53,11 +53,20 @@ const Header = () => {
       <nav className="mx-auto mt-2 flex w-full max-w-screen-2xl min-w-max items-center justify-end pl-6 lg:px-8">
         <div className="flex items-center justify-end text-right">
           <a
-            href="/everystreet/"
-            className="mr-4 text-sm font-medium opacity-70 hover:opacity-100 transition-opacity"
-            title="#everystreet coverage map"
+            href="#everystreet"
+            className="mr-4 text-sm font-medium opacity-70 transition-opacity hover:opacity-100"
+            title="#everystreet Regina SK — coverage map and stats"
           >
-            #everystreet
+            #everystreet Regina SK
+          </a>
+          <a
+            href="/everystreet/map.html"
+            target="_blank"
+            rel="noreferrer"
+            className="mr-4 text-sm font-medium opacity-70 transition-opacity hover:opacity-100"
+            title="Open the full everystreet coverage map"
+          >
+            Coverage map ↗
           </a>
           <div className="ml-4 flex items-center space-x-2">
             <button
