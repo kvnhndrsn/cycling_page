@@ -1,9 +1,4 @@
-import {
-  titleForRun,
-  formatRunTime,
-  Activity,
-  RunIds,
-} from '../../utils/utils';
+import { formatRunTime, Activity, RunIds } from '../../utils/utils';
 import { SHOW_ELEVATION_GAIN } from '../../utils/const';
 import { M_TO_DIST, M_TO_ELEV } from '../../utils/utils';
 import styles from './style.module.css';
@@ -43,7 +38,7 @@ const RunRow = ({
       key={run.start_date_local}
       onClick={handleClick}
     >
-      <td>{titleForRun(run)}</td>
+      <td className={styles.runDate}>{run.start_date_local.slice(0, 10)}</td>
       <td>{distance}</td>
       {SHOW_ELEVATION_GAIN && (
         <td>{((run.elevation_gain ?? 0) * M_TO_ELEV).toFixed(1)}</td>
@@ -53,7 +48,6 @@ const RunRow = ({
         <RunRouteIcon run={run} />
       </td>
       <td>{runTime}</td>
-      <td className={styles.runDate}>{run.start_date_local}</td>
     </tr>
   );
 };

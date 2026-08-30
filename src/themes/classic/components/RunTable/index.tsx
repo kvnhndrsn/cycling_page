@@ -36,7 +36,7 @@ const RunTable = ({
   const [sortState, setSortState] = useState<SortState | null>(null);
 
   const sortKeys = useMemo(() => {
-    const keys = [DIST_UNIT, 'Elev', 'Speed', 'Time', 'Date'];
+    const keys = ['Date', DIST_UNIT, 'Elev', 'Speed', 'Time'];
     return SHOW_ELEVATION_GAIN ? keys : keys.filter((key) => key !== 'Elev');
   }, []);
 
@@ -113,7 +113,6 @@ const RunTable = ({
       <table className={styles.runTable} cellSpacing="0" cellPadding="0">
         <thead>
           <tr>
-            <th />
             {headers.map((k) => {
               if (k === 'Route') {
                 return (
